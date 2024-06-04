@@ -2,5 +2,6 @@ public enum Type
 {
     Multiply,
     Minus,
-    Plus,
+    Additional,
+    Divide,
 }
