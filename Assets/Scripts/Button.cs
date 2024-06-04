@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class Button : MonoBehaviour
 {
     [SerializeField] private Items buttonItem;
     [SerializeField] private TextMeshProUGUI valueText;
+    [SerializeField] private Image image;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +25,7 @@ public class Button : MonoBehaviour
     {
         buttonItem = GameManager.instance.items[Random.Range(0, GameManager.instance.items.Count)];
         valueText.text = buttonItem.value.ToString();
+        image.sprite = buttonItem.sprite;
     }
 
     public void OnMouseDown()
@@ -35,25 +38,13 @@ public class Button : MonoBehaviour
                     Multiply(buttonItem.value);
                     Debug.Log("carptın");
                     break;
-                case Type.Minus:
-                    Minus(buttonItem.value);
-                    Debug.Log("cıkardın");
-                    break;
                 case Type.Additional:
-                    Additional(buttonItem.value);
+                    AdditionalorMinus(buttonItem.value);
                     Debug.Log("topladın");
                     break;
                 case Type.Divide:
                     Divide(buttonItem.value);
-                    Debug.Log("cıkardın");
-                    break;
-                case Type.DivideMinus:
-                    Divide(buttonItem.value);
-                    Debug.Log("cıkardın");
-                    break;
-                case Type.MultiplyMinus:
-                    Divide(buttonItem.value);
-                    Debug.Log("cıkardın");
+                    Debug.Log("böldün");
                     break;
             }
 
@@ -73,7 +64,7 @@ public class Button : MonoBehaviour
         GameManager.instance.potionAmount *= value;
     }
 
-    public void Additional(int value)
+    public void AdditionalorMinus(int value)
     {
         GameManager.instance.potionAmount += value;
     }
@@ -82,20 +73,4 @@ public class Button : MonoBehaviour
     {
         GameManager.instance.potionAmount /= value;
     }
-
-    public void Minus(int value)
-    {
-        GameManager.instance.potionAmount += value;
-    }
-
-    public void DivideMinus(int value)
-    {
-        GameManager.instance.potionAmount /= value;
-    }
-
-    public void MultiplyMinus(int value)
-    {
-        GameManager.instance.potionAmount *= value;
-    }
-
 }

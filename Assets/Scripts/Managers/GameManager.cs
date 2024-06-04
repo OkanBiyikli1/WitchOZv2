@@ -46,13 +46,14 @@ public class GameManager : MonoBehaviour
             potionAmount = 0;
             customerIndex++;
             GetNextCustomer(customerIndex);
+            UpdateContainerText();
             Debug.Log("iyilestirdin");
         }
-        else if(potionAmount < customers[0].neededAmount)
+        else if(potionAmount < customers[customerIndex].neededAmount)
         {
             Debug.Log("değeri arttirmalisin");
         }
-        else if(potionAmount > customers[0].neededAmount)
+        else if(potionAmount > customers[customerIndex].neededAmount)
         {
             Debug.Log("değeri azaltmalisin");
         }
