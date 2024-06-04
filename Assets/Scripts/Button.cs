@@ -27,29 +27,45 @@ public class Button : MonoBehaviour
 
     public void OnMouseDown()
     {
-        switch (buttonItem.type)
+        if(GameManager.instance.playerMove > 0)
         {
-            case Type.Multiply:
-                Multiply(buttonItem.value);
-                Debug.Log("carptın");
-                break;
-            case Type.Minus:
-                Minus(buttonItem.value);
-                Debug.Log("cıkardın");
-                break;
-            case Type.Additional:
-                Additional(buttonItem.value);
-                Debug.Log("topladın");
-                break;
-            case Type.Divide:
-                Divide(buttonItem.value);
-                Debug.Log("cıkardın");
-                break;
+            switch (buttonItem.type)
+            {
+                case Type.Multiply:
+                    Multiply(buttonItem.value);
+                    Debug.Log("carptın");
+                    break;
+                case Type.Minus:
+                    Minus(buttonItem.value);
+                    Debug.Log("cıkardın");
+                    break;
+                case Type.Additional:
+                    Additional(buttonItem.value);
+                    Debug.Log("topladın");
+                    break;
+                case Type.Divide:
+                    Divide(buttonItem.value);
+                    Debug.Log("cıkardın");
+                    break;
+                case Type.DivideMinus:
+                    Divide(buttonItem.value);
+                    Debug.Log("cıkardın");
+                    break;
+                case Type.MultiplyMinus:
+                    Divide(buttonItem.value);
+                    Debug.Log("cıkardın");
+                    break;
+            }
+
+            buttonItem = null;
+
+            GetItem();
+            GameManager.instance.playerMove--;
+            GameManager.instance.UpdateContainerText();
+        }else
+        {
+            Debug.Log("out of moves");
         }
-
-        buttonItem = null;
-
-        GetItem();
     }
 
     public void Multiply(int value)
@@ -69,7 +85,17 @@ public class Button : MonoBehaviour
 
     public void Minus(int value)
     {
-        GameManager.instance.potionAmount -= value;
+        GameManager.instance.potionAmount += value;
+    }
+
+    public void DivideMinus(int value)
+    {
+        GameManager.instance.potionAmount /= value;
+    }
+
+    public void MultiplyMinus(int value)
+    {
+        GameManager.instance.potionAmount *= value;
     }
 
 }

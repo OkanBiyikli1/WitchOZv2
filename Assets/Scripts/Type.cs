@@ -4,4 +4,6 @@ public enum Type
     Minus,
     Additional,
     Divide,
+    DivideMinus,
+    MultiplyMinus,
 }
