@@ -15,3 +15,4 @@ MonoBehaviour:
   neededAmount: -50
   moveValue: 10
   sprite: {fileID: 0}
+  dialog: merebe

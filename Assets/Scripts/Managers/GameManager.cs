@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject customer;
     [SerializeField] private TextMeshProUGUI customerText, customerMoveText;
     [SerializeField] private int customerIndex = 0;
+    [SerializeField] private TextMeshProUGUI dialogText;
 
     void Awake()
     {
@@ -31,6 +32,16 @@ public class GameManager : MonoBehaviour
     {
         GetNextCustomer(customerIndex);
         containerText.text = potionAmount.ToString();
+        dialogText.text = customers[customerIndex].dialog;
+    }
+
+    void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.N))
+        {
+            customerIndex++;
+            GetNextCustomer(customerIndex);
+        }
     }
 
     public void UpdateContainerText()
@@ -64,6 +75,7 @@ public class GameManager : MonoBehaviour
         customerText.text = customers[customerIndex].neededAmount.ToString();
         customerMoveText.text = customers[customerIndex].moveValue.ToString();
         playerMove = customers[customerIndex].moveValue;
+        dialogText.text = customers[customerIndex].dialog;
     }
 
 }

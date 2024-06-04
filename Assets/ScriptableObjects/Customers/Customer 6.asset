@@ -15,3 +15,4 @@ MonoBehaviour:
   neededAmount: 120
   moveValue: 10
   sprite: {fileID: 0}
+  dialog: yeess

@@ -15,3 +15,4 @@ MonoBehaviour:
   neededAmount: 20
   moveValue: 10
   sprite: {fileID: 0}
+  dialog: Merhaba
