@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
     public void Generate()
     {
-        if(potionAmount == customers[0].neededAmount)
+        if(potionAmount == customers[customerIndex].neededAmount)
         {
             potionAmount = 0;
             customerIndex++;
