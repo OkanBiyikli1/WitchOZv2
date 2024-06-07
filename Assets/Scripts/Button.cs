@@ -9,6 +9,8 @@ public class Button : MonoBehaviour
     [SerializeField] private Items buttonItem;
     [SerializeField] private TextMeshProUGUI valueText;
     [SerializeField] private Image image;
+    [SerializeField] private ParticleSystem puffParticle;
+    [SerializeField] private Material greenMat, blueMat, purpleMat, orangeMat;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,14 +38,22 @@ public class Button : MonoBehaviour
             {
                 case Type.Multiply:
                     Multiply(buttonItem.value);
+                    ChangeParticleMaterial(orangeMat);
                     Debug.Log("carptın");
                     break;
                 case Type.Additional:
                     AdditionalorMinus(buttonItem.value);
+                    ChangeParticleMaterial(blueMat);
                     Debug.Log("topladın");
                     break;
                 case Type.Divide:
                     Divide(buttonItem.value);
+                    ChangeParticleMaterial(purpleMat);
+                    Debug.Log("böldün");
+                    break;
+                case Type.Minus:
+                    Minus(buttonItem.value);
+                    ChangeParticleMaterial(greenMat);
                     Debug.Log("böldün");
                     break;
             }
@@ -53,7 +63,9 @@ public class Button : MonoBehaviour
             GetItem();
             GameManager.instance.playerMove--;
             GameManager.instance.UpdateContainerText();
-        }else
+            puffParticle.Play();
+        }
+        else
         {
             Debug.Log("out of moves");
         }
@@ -69,8 +81,19 @@ public class Button : MonoBehaviour
         GameManager.instance.potionAmount += value;
     }
 
+    public void Minus(int value)
+    {
+        GameManager.instance.potionAmount += value;
+    }
+
     public void Divide(int value)
     {
         GameManager.instance.potionAmount /= value;
+    }
+
+    private void ChangeParticleMaterial(Material mat)
+    {
+        var renderer = puffParticle.GetComponent<ParticleSystemRenderer>();
+        renderer.material = mat;
     }
 }
