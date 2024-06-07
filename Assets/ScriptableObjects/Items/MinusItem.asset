@@ -12,7 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7faeb9ab101c841878cf89ca421c9258, type: 3}
   m_Name: MinusItem
   m_EditorClassIdentifier: 
-  sprite: {fileID: 0}
-  icon: {fileID: 0}
+  sprite: {fileID: 21300000, guid: d8d4651eff87f4891b06c48e188d8ffc, type: 3}
   value: -5
   type: 1
