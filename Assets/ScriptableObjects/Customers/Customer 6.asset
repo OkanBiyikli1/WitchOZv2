@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Customer 6
   m_EditorClassIdentifier: 
   neededAmount: 120
-  moveValue: 10
+  moveValue: 20
   sprite: {fileID: 0}
   dialog: yeess

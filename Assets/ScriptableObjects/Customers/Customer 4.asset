@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Customer 4
   m_EditorClassIdentifier: 
   neededAmount: 40
-  moveValue: 10
+  moveValue: 15
   sprite: {fileID: 0}
   dialog: mrb
