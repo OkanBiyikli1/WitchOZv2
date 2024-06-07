@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: MultiplyItem
   m_EditorClassIdentifier: 
   sprite: {fileID: 21300000, guid: 4947d667d267c403d82c1e184608d07f, type: 3}
-  value: -4
+  value: 2
   type: 0

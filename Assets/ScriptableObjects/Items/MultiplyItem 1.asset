@@ -10,8 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7faeb9ab101c841878cf89ca421c9258, type: 3}
-  m_Name: MinusItem
+  m_Name: MultiplyItem 1
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: d8d4651eff87f4891b06c48e188d8ffc, type: 3}
-  value: -1
-  type: 1
+  sprite: {fileID: 21300000, guid: 4947d667d267c403d82c1e184608d07f, type: 3}
+  value: 3
+  type: 0
