@@ -6,6 +6,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public int playerMove = 0;
+    [SerializeField] private PopupController popupController;
+    
     [Header("Items")]
     public List<Items> items = new List<Items>();
     public static GameManager instance;
@@ -89,7 +91,7 @@ public class GameManager : MonoBehaviour
     {
         if(potionAmount != customers[levelIndex].neededAmount && playerMove == 0)
         {
-            losePanel.SetActive(true);
+            popupController.OpenPanel(losePanel);
             Debug.Log("kaybettin");
         }
     }
