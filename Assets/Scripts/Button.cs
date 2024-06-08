@@ -58,16 +58,15 @@ public class Button : MonoBehaviour
                     break;
             }
 
-            buttonItem = null;
-
             GetItem();
             GameManager.instance.playerMove--;
             GameManager.instance.UpdateContainerText();
             puffParticle.Play();
+            GameManager.instance.Lose();
         }
         else
         {
-            Debug.Log("out of moves");
+            Debug.Log("out of moves"); 
         }
     }
 

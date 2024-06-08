@@ -21,10 +21,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogText;
 
     [Header("UI")]
-
-    [SerializeField] private GameObject line2;
-    [SerializeField] private GameObject line3;
     [SerializeField] private TextMeshProUGUI currentLevelText;
+    [SerializeField] private GameObject losePanel;
 
     void Awake()
     {
@@ -36,7 +34,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        CheckLineToActivate();
         GetNextCustomer(levelIndex);
         containerText.text = potionAmount.ToString();
         dialogText.text = customers[levelIndex].dialog;
@@ -50,7 +47,6 @@ public class GameManager : MonoBehaviour
             levelIndex++;
             GetNextCustomer(levelIndex);
             currentLevelText.text = "Level: " + levelIndex.ToString();
-            CheckLineToActivate();
         }
     }
 
@@ -69,7 +65,6 @@ public class GameManager : MonoBehaviour
             GetNextCustomer(levelIndex);
             UpdateContainerText();
             Debug.Log("iyilestirdin");
-            CheckLineToActivate();
             currentLevelText.text = "Level: " + levelIndex.ToString();
         }
         else if(potionAmount < customers[levelIndex].neededAmount)
@@ -90,13 +85,12 @@ public class GameManager : MonoBehaviour
         dialogText.text = customers[levelIndex].dialog;
     }
 
-    void CheckLineToActivate()
+    public void Lose()//Burayı değiştiricez buraya bir bool fonksiyonu açıcaz ve onu button scrtiptinden kontrolünü sağlayacağız
     {
-        if(levelIndex == 25)
-        line2.SetActive(true);
-
-        if(levelIndex == 50)
-        line3.SetActive(true);
+        if(potionAmount != customers[levelIndex].neededAmount && playerMove == 0)
+        {
+            losePanel.SetActive(true);
+            Debug.Log("kaybettin");
+        }
     }
-
 }
