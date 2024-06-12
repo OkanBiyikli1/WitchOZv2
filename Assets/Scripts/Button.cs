@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using Spine.Unity;
 
 public class Button : MonoBehaviour
 {
@@ -11,13 +12,16 @@ public class Button : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private ParticleSystem puffParticle;
     [SerializeField] private Material greenMat, blueMat, purpleMat, orangeMat;
-    // Start is called before the first frame update
+
+    [SerializeField] private GameObject spinePrefab; // Spine animasyon prefabı
+    //[SerializeField] private int spawnCount = 5; // Üretilecek animasyon sayısı
+   // [SerializeField] private float spawnRadius = .3f; // Üretim alanının yarıçapı
+
     void Start()
     {
         GetItem();
     }
 
-    // Update is called once per frame
     void Update()
     {
         
@@ -32,30 +36,44 @@ public class Button : MonoBehaviour
 
     public void OnMouseDown()
     {
-        if(GameManager.instance.playerMove > 0)
+        if (GameManager.instance.playerMove > 0)
         {
-            switch (buttonItem.type)
+            int spawnCount = Random.Range(3, 9);
+            for (int i = 0; i < spawnCount; i++)
             {
-                case Type.Multiply:
-                    Multiply(buttonItem.value);
-                    ChangeParticleMaterial(orangeMat);
-                    Debug.Log("carptın");
-                    break;
-                case Type.Additional:
-                    AdditionalorMinus(buttonItem.value);
-                    ChangeParticleMaterial(blueMat);
-                    Debug.Log("topladın");
-                    break;
-                case Type.Divide:
-                    Divide(buttonItem.value);
-                    ChangeParticleMaterial(purpleMat);
-                    Debug.Log("böldün");
-                    break;
-                case Type.Minus:
-                    Minus(buttonItem.value);
-                    ChangeParticleMaterial(greenMat);
-                    Debug.Log("böldün");
-                    break;
+                Vector3 randomPosition = GetRandomPositionAround(transform.position);
+                GameObject spineInstance = Instantiate(spinePrefab, randomPosition, Quaternion.identity);
+                var skeletonMecanim = spineInstance.GetComponent<SkeletonMecanim>();
+
+                switch (buttonItem.type)
+                {
+                    case Type.Multiply:
+                        Multiply(buttonItem.value);
+                        ChangeParticleMaterial(orangeMat);
+                        ChangeSpineSkin(skeletonMecanim, "yellow");
+                        Debug.Log("carptın");
+                        break;
+                    case Type.Additional:
+                        AdditionalorMinus(buttonItem.value);
+                        ChangeParticleMaterial(blueMat);
+                        ChangeSpineSkin(skeletonMecanim, "blue");
+                        Debug.Log("topladın");
+                        break;
+                    case Type.Divide:
+                        Divide(buttonItem.value);
+                        ChangeParticleMaterial(purpleMat);
+                        ChangeSpineSkin(skeletonMecanim, "red");
+                        Debug.Log("böldün");
+                        break;
+                    case Type.Minus:
+                        Minus(buttonItem.value);
+                        ChangeParticleMaterial(greenMat);
+                        ChangeSpineSkin(skeletonMecanim, "green");
+                        Debug.Log("böldün");
+                        break;
+                }
+
+                StartCoroutine(DestroyAfterAnimation(spineInstance, skeletonMecanim));
             }
 
             GetItem();
@@ -68,6 +86,27 @@ public class Button : MonoBehaviour
         {
             Debug.Log("out of moves"); 
         }
+    }
+
+    private Vector3 GetRandomPositionAround(Vector3 center)
+    {
+        float spawnRadius = .3f;
+        Vector2 randomCircle = Random.insideUnitCircle * spawnRadius;
+        Vector3 spawnPosition = new Vector3(center.x + randomCircle.x, center.y + randomCircle.y, center.z);
+        return spawnPosition;
+    }
+
+    private void ChangeSpineSkin(SkeletonMecanim skeletonMecanim, string skinName)
+    {
+        skeletonMecanim.initialSkinName = skinName;
+        skeletonMecanim.Initialize(true); // Skin değişikliğini uygula
+    }
+
+    private IEnumerator DestroyAfterAnimation(GameObject instance, SkeletonMecanim skeletonMecanim)
+    {
+        // Animasyon süresini bekle (örneğin 2 saniye)
+        yield return new WaitForSeconds(.35f);
+        Destroy(instance);
     }
 
     public void Multiply(int value)
