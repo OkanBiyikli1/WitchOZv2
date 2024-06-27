@@ -13,9 +13,7 @@ public class Button : MonoBehaviour
     [SerializeField] private ParticleSystem puffParticle;
     [SerializeField] private Material greenMat, blueMat, purpleMat, orangeMat;
 
-    [SerializeField] private GameObject spinePrefab; // Spine animasyon prefabı
-    //[SerializeField] private int spawnCount = 5; // Üretilecek animasyon sayısı
-   // [SerializeField] private float spawnRadius = .3f; // Üretim alanının yarıçapı
+    [SerializeField] private GameObject spinePrefab; // Spine animation prefab
 
     void Start()
     {
@@ -39,40 +37,40 @@ public class Button : MonoBehaviour
         if (GameManager.instance.playerMove > 0)
         {
             int spawnCount = Random.Range(3, 9);
+            Debug.Log(spawnCount);
+                
+            // Execute item logic once
+            switch (buttonItem.type)
+            {
+                case Type.Multiply:
+                    Multiply(buttonItem.value);
+                    //ChangeParticleMaterial(orangeMat);
+                    Debug.Log("Multiplied");
+                    break;
+                case Type.Additional:
+                    AdditionalorMinus(buttonItem.value);
+                    //ChangeParticleMaterial(blueMat);
+                    Debug.Log("Added");
+                    break;
+                case Type.Divide:
+                    Divide(buttonItem.value);
+                    //ChangeParticleMaterial(purpleMat);
+                    Debug.Log("Divided");
+                    break;
+                case Type.Minus:
+                    Minus(buttonItem.value);
+                    //ChangeParticleMaterial(greenMat);
+                    Debug.Log("Subtracted");
+                    break;
+            }
+
+            // Spawn animations in the loop
             for (int i = 0; i < spawnCount; i++)
             {
                 Vector3 randomPosition = GetRandomPositionAround(transform.position);
                 GameObject spineInstance = Instantiate(spinePrefab, randomPosition, Quaternion.identity);
                 var skeletonMecanim = spineInstance.GetComponent<SkeletonMecanim>();
-
-                switch (buttonItem.type)
-                {
-                    case Type.Multiply:
-                        Multiply(buttonItem.value);
-                        ChangeParticleMaterial(orangeMat);
-                        ChangeSpineSkin(skeletonMecanim, "yellow");
-                        Debug.Log("carptın");
-                        break;
-                    case Type.Additional:
-                        AdditionalorMinus(buttonItem.value);
-                        ChangeParticleMaterial(blueMat);
-                        ChangeSpineSkin(skeletonMecanim, "blue");
-                        Debug.Log("topladın");
-                        break;
-                    case Type.Divide:
-                        Divide(buttonItem.value);
-                        ChangeParticleMaterial(purpleMat);
-                        ChangeSpineSkin(skeletonMecanim, "red");
-                        Debug.Log("böldün");
-                        break;
-                    case Type.Minus:
-                        Minus(buttonItem.value);
-                        ChangeParticleMaterial(greenMat);
-                        ChangeSpineSkin(skeletonMecanim, "green");
-                        Debug.Log("böldün");
-                        break;
-                }
-
+                ChangeSpineSkin(skeletonMecanim, GetSkinName(buttonItem.type));
                 StartCoroutine(DestroyAfterAnimation(spineInstance, skeletonMecanim));
             }
 
@@ -84,7 +82,7 @@ public class Button : MonoBehaviour
         }
         else
         {
-            Debug.Log("out of moves"); 
+            Debug.Log("Out of moves"); 
         }
     }
 
@@ -99,12 +97,28 @@ public class Button : MonoBehaviour
     private void ChangeSpineSkin(SkeletonMecanim skeletonMecanim, string skinName)
     {
         skeletonMecanim.initialSkinName = skinName;
-        skeletonMecanim.Initialize(true); // Skin değişikliğini uygula
+        skeletonMecanim.Initialize(true); // Apply the skin change
+    }
+
+    private string GetSkinName(Type itemType)
+    {
+        switch (itemType)
+        {
+            case Type.Multiply:
+                return "yellow";
+            case Type.Additional:
+                return "blue";
+            case Type.Divide:
+                return "red";
+            case Type.Minus:
+                return "green";
+            default:
+                return "default";
+        }
     }
 
     private IEnumerator DestroyAfterAnimation(GameObject instance, SkeletonMecanim skeletonMecanim)
     {
-        // Animasyon süresini bekle (örneğin 2 saniye)
         yield return new WaitForSeconds(.35f);
         Destroy(instance);
     }
@@ -121,7 +135,7 @@ public class Button : MonoBehaviour
 
     public void Minus(int value)
     {
-        GameManager.instance.potionAmount += value;
+        GameManager.instance.potionAmount -= value; // Assuming this is a subtraction based on the naming
     }
 
     public void Divide(int value)

@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7faeb9ab101c841878cf89ca421c9258, type: 3}
   m_Name: MultiplyItem 3
   m_EditorClassIdentifier: 
-  sprite: {fileID: 21300000, guid: 4947d667d267c403d82c1e184608d07f, type: 3}
+  sprite: {fileID: 21300000, guid: dcd4fbcf505ef4ec5a462fc812afea15, type: 3}
   value: -2
   type: 0
